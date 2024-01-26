@@ -4,6 +4,7 @@ import { carmakers } from './data/car-makers';
 import { carsData } from './data/carsData';
 
 
+
 interface Car {
   image: string;
   title: string;
