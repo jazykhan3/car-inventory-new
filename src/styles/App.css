@@ -1,3 +1,24 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+
+html::-webkit-scrollbar {
+    width: 20px;
+}
+        
+html::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-image: url("https://i.ibb.co/5150925/tracks.png");
+    background-position: -5px;
+    background-repeat: repeat-y;
+    background-size: 50px;
+}
+        
+html::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+  background-image: url("https://i.ibb.co/q95CBdZ/train.png");
+    background-position:center center;
+    background-repeat: no-repeat;
+    background-size: 35px;
+}

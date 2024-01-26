@@ -11,32 +11,56 @@ interface Car {
   maker: string;
   start_production: number;
   class: string;
+  engineSize: number; // Assume engineSize is a number property
 }
+
+type EngineSize = "smaller than 2 lit" | "2 to 3 lit" | "greater than 3 lit";
+
+
 
 function App(): JSX.Element {
   const [selectedMaker, setSelectedMaker] = useState(carmakers[0]); // Default to the first maker
-
+  function getRandomEngineSize(): number {
+    return Math.random() * 5; // Adjust as needed based on your actual data
+  }
   const handleMakerClick = (maker: typeof carmakers[number]): void => {
     setSelectedMaker(maker);
   };
 
-  function restructureCarsArray(carsArray: typeof carsData): Car[] {
-    return carsArray.map((car: any) => {
-      const titleWords = car.title.split(' ');
-      const maker = titleWords.shift();
-      const title = titleWords.join(' ');
+  type EngineSize = "smaller than 2 lit" | "2 to 3 lit" | "greater than 3 lit";
 
-      return {
-        image: car.image,
-        title: title,
-        maker: maker!,
-        start_production: car.start_production,
-        class: car.class,
-      };
-    });
+  function restructureCarsArray(carsArray: typeof carsData, engine: EngineSize): Car[] {
+    return carsArray
+      .map((car: any) => {
+        const titleWords = car.title.split(' ');
+        const maker = titleWords.shift();
+        const title = titleWords.join(' ');
+  
+        return {
+          image: car.image,
+          title: title,
+          maker: maker!,
+          start_production: car.start_production,
+          class: car.class,
+          engineSize: getRandomEngineSize(), // Add a random engine size for demonstration
+        };
+      })
+      .filter((car: Car) => {
+        // Filter cars based on the selected engine size
+        switch (engine) {
+          case "smaller than 2 lit":
+            return car.engineSize < 2;
+          case "2 to 3 lit":
+            return car.engineSize >= 2 && car.engineSize <= 3;
+          case "greater than 3 lit":
+            return car.engineSize > 3;
+          default:
+            return true; // If no specific engine size is selected, include all cars
+        }
+      });
   }
 
-  const restructuredCarsArray: Car[] = restructureCarsArray(carsData);
+  const restructuredCarsArray: Car[] = restructureCarsArray(carsData,'smaller than 2 lit');
 
   return (
     <>
