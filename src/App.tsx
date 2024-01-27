@@ -114,7 +114,7 @@ function App(): JSX.Element {
       <div className=" flex flex-col justify-between">
         <div className="flex">
         {/* Sidebar */}
-        <div className="w-1/5 h-screen bg-[#FFFFFF] p-8 flex flex-col gap-8 left-0  fixed overflow-auto">
+        <div className="w-1/5 h-screen bg-[#FFFFFF] px-8 pb-8 pt-36  flex flex-col gap-8 left-0  fixed overflow-auto">
           {carmakers?.map((maker: any, idx: any) => (
             <div
               key={idx}
