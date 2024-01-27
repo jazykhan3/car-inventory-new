@@ -112,10 +112,9 @@ function App(): JSX.Element {
   return (
     <>
       <div className=" flex flex-col justify-between">
-        <div className="flex items-center gap-10 p-3 bg-[#e5e5e5]"><img src="/car-inventory.png" className="w-[350px] h-[100px]" /><span className="text-4xl w-[100%] font-bold text-center">Car Inventory</span></div>
         <div className="flex">
         {/* Sidebar */}
-        <div className="w-1/5 h-screen bg-[#FFFFFF] p-8 flex flex-col gap-8 left-0 fixed overflow-auto">
+        <div className="w-1/5 h-screen bg-[#FFFFFF] p-8 flex flex-col gap-8 left-0  fixed overflow-auto">
           {carmakers?.map((maker: any, idx: any) => (
             <div
               key={idx}
@@ -137,7 +136,7 @@ function App(): JSX.Element {
         </div>
 
         {/* Content */}
-        <div className="w-4/5 p-8  max-h-fit flex-col  flex absolute right-0 overflow-auto">
+        <div className="w-4/5 px-8 pb-8 pt-36  max-h-fit flex-col  flex absolute right-0 overflow-auto">
           <div className="w-[100%] h-[60px]  flex gap-4 mb-5 relative rounded-lg  items-center">
             <div className="w-[90%] items-center h-[60px]  flex">
               {" "}
