@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface FiltersPopupProps {
   showFiltersPopup: boolean;
@@ -24,7 +24,6 @@ const FiltersPopup: React.FC<FiltersPopupProps> = ({
   setShowFiltersPopup,
 }) => {
   const popupRef = useRef<HTMLDivElement>(null);
-  const [Error,setError]=useState('');
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
