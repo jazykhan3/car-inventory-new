@@ -21,16 +21,25 @@ function App(): JSX.Element {
   const [showFiltersPopup, setShowFiltersPopup] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [engineSizeFilter, setEngineSizeFilter] = useState('');
-  const [yearFilter, setYearFilter] = useState("");
-  const [filteredCars, setFilteredCars] = useState<Car[]>([]);
+  const [startYear, setStartYear] = useState<number | ''>('');
+  const [endYear, setEndYear] = useState<number | ''>('');
+    const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [searchInput, setSearchInput] = useState("");
 
   const handleMakerClick = (maker: typeof carmakers[number]): void => {
     setSelectedMaker(maker);
     setEngineSizeFilter('');
-    setYearFilter("");
+    setStartYear("");
+    setEndYear("")
   };
-
+  const clearFilters = () => {
+    setEngineSizeFilter('');
+    setStartYear('');
+    setSearchInput('');
+    setEndYear("")
+    setShowResults(false);
+    applyFilters(restructuredCarsArray);
+  };
   const applyFilters = (data: Car[]) => {
     const filteredData = data?.filter(
       (car) =>
@@ -39,7 +48,8 @@ function App(): JSX.Element {
     ).filter((car) => {
       return (
         (engineSizeFilter === '' || car.engineSize === engineSizeFilter) &&
-        (yearFilter === "" || car.start_production?.toString().includes(yearFilter))
+        ((startYear === '' || car.start_production >= startYear) &&
+         (endYear === '' || car.start_production <= endYear))
       );
     });
 
@@ -82,7 +92,9 @@ function App(): JSX.Element {
 
   const restructuredCarsArray: Car[] = restructureCarsArray(carsData);
 
-  const handleFiltersSubmit = () => {
+  const handleFiltersSubmit = () => 
+  {
+    
     setShowResults(true);
 
     const filteredCarsResult = restructureCarsArray(carsData).filter(
@@ -95,6 +107,8 @@ function App(): JSX.Element {
 
     setShowFiltersPopup(false);
   };
+  
+  const filtersApplied = engineSizeFilter !== '' || startYear !== '' || endYear !== ''|| searchInput !== '';
 
   return (
     <div className="flex flex-col justify-between">
@@ -103,15 +117,18 @@ function App(): JSX.Element {
         <CarSidebar carmakers={carmakers} selectedMaker={selectedMaker} handleMakerClick={handleMakerClick} />
         {/* Content */}
         <div className="w-4/5 px-8 pb-8 pt-20 md:pt-36 max-h-fit flex-col flex absolute right-0 overflow-auto">
-          <SearchBar searchInput={searchInput} handleSearchInputChange={(e) => handleSearchInputChange(e)} toggleFiltersPopup={toggleFiltersPopup} />
+          <SearchBar filtersApplied={filtersApplied} clearFilters={clearFilters} searchInput={searchInput} handleSearchInputChange={(e) => handleSearchInputChange(e)} toggleFiltersPopup={toggleFiltersPopup} />
           <CardContainer filteredCars={filteredCars} />
           <FiltersPopup
+            setShowFiltersPopup={setShowFiltersPopup}
             showFiltersPopup={showFiltersPopup}
             handleFiltersSubmit={handleFiltersSubmit}
             engineSizeFilter={engineSizeFilter}
             setEngineSizeFilter={setEngineSizeFilter}
-            yearFilter={yearFilter}
-            setYearFilter={setYearFilter}
+            startYear={startYear}
+            setStartYear={setStartYear}
+            endYear={endYear}
+            setEndYear={setEndYear}
           />
         </div>
       </div>

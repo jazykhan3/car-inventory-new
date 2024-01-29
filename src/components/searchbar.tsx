@@ -4,12 +4,14 @@ interface SearchBarProps {
   searchInput: string;
   handleSearchInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   toggleFiltersPopup: () => void;
+  clearFilters: () => void;
+  filtersApplied:boolean; // New function to clear filters
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchInput, handleSearchInputChange, toggleFiltersPopup }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ searchInput,filtersApplied, handleSearchInputChange, toggleFiltersPopup, clearFilters }) => {
   return (
     <div className="w-[100%] h-[60px] flex gap-4 mb-5 relative rounded-lg items-center">
-      <div className="w-[90%] items-center h-[40px] flex">
+      <div className="w-[80%] items-center h-[40px] flex">
         <input
           type="text"
           placeholder="Search..."
@@ -29,11 +31,19 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchInput, handleSearchInputCha
         </svg>
       </div>
       <button
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer"
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer mr-4"
         onClick={toggleFiltersPopup}
       >
         Filters
       </button>
+      {filtersApplied && (
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded-lg cursor-pointer"
+          onClick={clearFilters}
+        >
+          Clear Filters
+        </button>
+      )}
     </div>
   );
 };

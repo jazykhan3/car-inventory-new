@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface FiltersPopupProps {
   showFiltersPopup: boolean;
   handleFiltersSubmit: () => void;
   engineSizeFilter: string;
   setEngineSizeFilter: React.Dispatch<React.SetStateAction<string>>;
-  yearFilter: string;
-  setYearFilter: React.Dispatch<React.SetStateAction<string>>;
+  startYear: number | '';
+  setStartYear: React.Dispatch<React.SetStateAction<number | ''>>;
+  endYear: number | '';
+  setEndYear: React.Dispatch<React.SetStateAction<number | ''>>;
+  setShowFiltersPopup: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FiltersPopup: React.FC<FiltersPopupProps> = ({
@@ -14,14 +17,33 @@ const FiltersPopup: React.FC<FiltersPopupProps> = ({
   handleFiltersSubmit,
   engineSizeFilter,
   setEngineSizeFilter,
-  yearFilter,
-  setYearFilter,
+  startYear,
+  setStartYear,
+  endYear,
+  setEndYear,
+  setShowFiltersPopup,
 }) => {
+  const popupRef = useRef<HTMLDivElement>(null);
+  const [Error,setError]=useState('');
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
+        setShowFiltersPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [setShowFiltersPopup]);
+
   return showFiltersPopup ? (
     <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg">
+      <div ref={popupRef} className="bg-white p-8 rounded-lg">
         <h2 className="text-2xl mb-4">Filters</h2>
-        <form onSubmit={handleFiltersSubmit}>
+        <form onSubmit={()=>handleFiltersSubmit()}>
           <div className="mb-4 flex justify-between items-center">
             <label htmlFor="engineSize">Engine Size:</label>
             <select
@@ -39,14 +61,31 @@ const FiltersPopup: React.FC<FiltersPopupProps> = ({
             </select>
           </div>
           <div className="mb-4 flex justify-between items-center">
-            <label htmlFor="year">Year:</label>
+            <label htmlFor="startYear">Start Year:</label>
             <input
-              type="number"
-              id="year"
-              value={yearFilter}
-              onChange={(e) => setYearFilter(e.target.value)}
+              type="text"
+              id="startYear"
+              value={startYear}
+              onInput={(e) => {
+                const inputValue = e.currentTarget.value.replace(/\D/g, '').slice(0, 4);
+                setStartYear(inputValue === '' ? '' : parseInt(inputValue, 10));
+              }}
               className="w-[100px] h-[40px] ml-2 border border-[#e5e5e5]"
             />
+          </div>
+          <div className="mb-4 flex justify-between items-center">
+            <label htmlFor="endYear">End Year:</label>
+            <input
+              type="text"
+              id="endYear"
+              value={endYear}
+              onInput={(e) => {
+                const inputValue = e.currentTarget.value.replace(/\D/g, '').slice(0, 4);
+                setEndYear(inputValue === '' ? '' : parseInt(inputValue, 10));
+              }}
+              className="w-[100px] h-[40px] ml-2 border border-[#e5e5e5]"
+            />
+            {/* {error?.length > 0 && <p className='text-xs text-[#ef4744]'>{error}</p>} */}
           </div>
           <button
             type="submit"
