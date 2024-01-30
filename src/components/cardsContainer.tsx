@@ -7,20 +7,19 @@ interface CardContainerProps {
 
 const CardContainer: React.FC<CardContainerProps> = ({ filteredCars }) => {
   return (
-    <span>
+    <div>
       {filteredCars?.length > 0 ? (
-  <div className="flex flex-row gap-8 flex-wrap justify-between">
-    {filteredCars.map((car) => (
-  <Card car={car}/>
-    ))}
-  </div>
-) : (
-  <div className="h-screen w-full text-4xl font-bold flex justify-center items-center">
-    No Data Found
-  </div>
-)}
-
-    </span>
+        <div className="d-flex flex-row gap-3 flex-wrap justify-content-between">
+          {filteredCars.map((car, index) => (
+            <Card key={index} car={car} />
+          ))}
+        </div>
+      ) : (
+        <div className="h-100 w-100 text-lg font-weight-bold d-flex justify-content-center align-items-center">
+          No Data Found
+        </div>
+      )}
+    </div>
   );
 };
 

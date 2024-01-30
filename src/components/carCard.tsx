@@ -6,19 +6,20 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ car }) => {
   return (
-    <div className="h-max border border-[#e5e5e5] flex flex-col justify-between gap-8 rounded-xl">
+    <div className="card border border-grey d-flex flex-column justify-content-between gap-3 rounded btn">
       <img
         src={car?.image}
-        className="object-contain h-[300px] w-[300px]"
+        className="card-img-top object-fit-contain"
         alt={car?.title}
         height={300}
         width={300}
+        style={{width:300,height:300}}
       />
-      <div className="flex items-center justify-between p-4">
-        <span>{car?.title}</span>
-        <span>{car?.start_production}</span>
+      <div className="card-body d-flex justify-content-between p-3">
+        <span className="card-title">{car?.title}</span>
+        <span className="card-subtitle">{car?.start_production}</span>
       </div>
-      <div className="flex items-center justify-between px-4">
+      <div className="card-body d-flex justify-content-between px-3">
         <span>{car?.engineSize}</span>
       </div>
     </div>

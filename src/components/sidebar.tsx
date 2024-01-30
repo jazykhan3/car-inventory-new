@@ -10,33 +10,34 @@ const CarSidebar: React.FC<CarSidebarProps> = ({ carmakers, selectedMaker, handl
   return (
     <>
       {/* Hidden on small screens, visible on medium and larger screens */}
-      <div className="hidden md:flex w-1/5 h-screen bg-[#FFFFFF] px-8 pb-8 pt-36 flex-col gap-8 left-0 fixed overflow-auto">
+      <div style={{width:'20%',overflow:'auto',paddingTop:140}} className="d-none d-md-flex flex-column  h-100 bg-light px-3 pb-3  gap-3 position-fixed">
         {carmakers?.map((maker: any, idx: any) => (
           <div
             key={idx}
-            className={`p-5 rounded-lg flex flex-row gap-4 items-center cursor-pointer ${
+            className={`d-flex p-3 rounded flex-row align-items-center btn ${
               selectedMaker === maker ? 'bg-gray-200' : ''
             }`}
+            style={selectedMaker === maker ? {backgroundColor:'rgb(229 231 235)' }:{}}
             onClick={() => handleMakerClick(maker)}
           >
             <img
               src={maker?.urlLogo}
               width={30}
               height={30}
-              className="rounded-full"
+              className="rounded-circle"
               alt={maker?.title}
             />
-            <span className="text-xl font-normal">{maker?.title}</span>
+            <span className="text-lg font-normal ms-2">{maker?.title}</span>
           </div>
         ))}
       </div>
 
       {/* Visible on small screens, hidden on medium and larger screens */}
-      <div className="flex md:hidden border-r border-[#e5e5e5] h-screen bg-[#FFFFFF] px-2 pb-8 pt-36 flex-col gap-4 left-0 fixed overflow-auto">
+      <div className="d-flex d-md-none flex-column border-end border-gray-300 h-100 bg-light px-2 pb-2 pt-5 gap-2 position-fixed">
         {carmakers?.map((maker: any, idx: any) => (
           <div
             key={idx}
-            className={`p-2 rounded-lg flex flex-row gap-4 items-center cursor-pointer ${
+            className={`p-2 rounded flex-row align-items-center cursor-pointer ${
               selectedMaker === maker ? 'bg-gray-200' : ''
             }`}
             onClick={() => handleMakerClick(maker)}
@@ -45,7 +46,7 @@ const CarSidebar: React.FC<CarSidebarProps> = ({ carmakers, selectedMaker, handl
               src={maker?.urlLogo}
               width={30}
               height={30}
-              className="rounded-full"
+              className="rounded-circle"
               alt={maker?.title}
             />
           </div>

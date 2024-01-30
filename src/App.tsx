@@ -111,28 +111,35 @@ function App(): JSX.Element {
   const filtersApplied = engineSizeFilter !== '' || startYear !== '' || endYear !== ''|| searchInput !== '';
 
   return (
-    <div className="flex flex-col justify-between">
-      <div className="flex">
-        {/* Sidebar */}
-        <CarSidebar carmakers={carmakers} selectedMaker={selectedMaker} handleMakerClick={handleMakerClick} />
-        {/* Content */}
-        <div className="w-4/5 px-8 pb-8 pt-20 md:pt-36 max-h-fit flex-col flex absolute right-0 overflow-auto">
-          <SearchBar filtersApplied={filtersApplied} clearFilters={clearFilters} searchInput={searchInput} handleSearchInputChange={(e) => handleSearchInputChange(e)} toggleFiltersPopup={toggleFiltersPopup} />
-          <CardContainer filteredCars={filteredCars} />
-          <FiltersPopup
-            setShowFiltersPopup={setShowFiltersPopup}
-            showFiltersPopup={showFiltersPopup}
-            handleFiltersSubmit={handleFiltersSubmit}
-            engineSizeFilter={engineSizeFilter}
-            setEngineSizeFilter={setEngineSizeFilter}
-            startYear={startYear}
-            setStartYear={setStartYear}
-            endYear={endYear}
-            setEndYear={setEndYear}
-          />
-        </div>
+    <div className="d-flex flex-column justify-content-between">
+    <div className="d-flex w-100">
+      {/* Sidebar */}
+      <CarSidebar carmakers={carmakers} selectedMaker={selectedMaker} handleMakerClick={handleMakerClick} />
+      {/* Content */}
+      <div style={{width:'80%',overflow:'auto',paddingTop:140}} className=" px-3 pb-3 md:pt-5 max-h-fit flex-column flex position-absolute end-0 overflow-auto">
+        <SearchBar
+          filtersApplied={filtersApplied}
+          clearFilters={clearFilters}
+          searchInput={searchInput}
+          handleSearchInputChange={(e) => handleSearchInputChange(e)}
+          toggleFiltersPopup={toggleFiltersPopup}
+        />
+        <CardContainer filteredCars={filteredCars} />
+        <FiltersPopup
+          setShowFiltersPopup={setShowFiltersPopup}
+          showFiltersPopup={showFiltersPopup}
+          handleFiltersSubmit={handleFiltersSubmit}
+          engineSizeFilter={engineSizeFilter}
+          setEngineSizeFilter={setEngineSizeFilter}
+          startYear={startYear}
+          setStartYear={setStartYear}
+          endYear={endYear}
+          setEndYear={setEndYear}
+        />
       </div>
     </div>
+  </div>
+  
   );
 }
 

@@ -39,17 +39,19 @@ const FiltersPopup: React.FC<FiltersPopupProps> = ({
   }, [setShowFiltersPopup]);
 
   return showFiltersPopup ? (
-    <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex items-center justify-center">
-      <div ref={popupRef} className="bg-white p-8 rounded-lg">
+    <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center">
+      <div ref={popupRef} className="bg-white p-4 rounded">
         <h2 className="text-2xl mb-4">Filters</h2>
-        <form onSubmit={()=>handleFiltersSubmit()}>
-          <div className="mb-4 flex justify-between items-center">
+        <form onSubmit={handleFiltersSubmit}>
+          <div className="mb-3 d-flex justify-content-between align-items-center">
             <label htmlFor="engineSize">Engine Size:</label>
             <select
               id="engineSize"
               value={engineSizeFilter}
               onChange={(e) => setEngineSizeFilter(e.target.value)}
-              className="px-5 py-2 rounded ml-2"
+              className="form-select px-3 py-2 rounded ms-2"
+              style={{width:100}}
+              
             >
               <option value="all">All</option>
               <option value="1.2L">1.2L</option>
@@ -59,7 +61,7 @@ const FiltersPopup: React.FC<FiltersPopupProps> = ({
               {/* Add more options as needed */}
             </select>
           </div>
-          <div className="mb-4 flex justify-between items-center">
+          <div className="mb-3 d-flex justify-content-between align-items-center">
             <label htmlFor="startYear">Start Year:</label>
             <input
               type="text"
@@ -69,26 +71,28 @@ const FiltersPopup: React.FC<FiltersPopupProps> = ({
                 const inputValue = e.currentTarget.value.replace(/\D/g, '').slice(0, 4);
                 setStartYear(inputValue === '' ? '' : parseInt(inputValue, 10));
               }}
-              className="w-[100px] h-[40px] ml-2 border border-[#e5e5e5]"
+              style={{width:100}}
+              className="form-control w-[100px] h-40 ms-2 border border-grey"
             />
           </div>
-          <div className="mb-4 flex justify-between items-center">
+          <div className="mb-3 d-flex justify-content-between align-items-center">
             <label htmlFor="endYear">End Year:</label>
             <input
               type="text"
               id="endYear"
               value={endYear}
+              style={{width:100}}
+
               onInput={(e) => {
                 const inputValue = e.currentTarget.value.replace(/\D/g, '').slice(0, 4);
                 setEndYear(inputValue === '' ? '' : parseInt(inputValue, 10));
               }}
-              className="w-[100px] h-[40px] ml-2 border border-[#e5e5e5]"
+              className="form-control w-[100px] h-40 ms-2 border border-grey"
             />
-            {/* {error?.length > 0 && <p className='text-xs text-[#ef4744]'>{error}</p>} */}
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            className="btn btn-primary px-4 py-2 rounded-lg"
           >
             Apply Filters
           </button>
